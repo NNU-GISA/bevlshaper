@@ -7,6 +7,14 @@ Find L-shapes in 3D point clouds transformed into bird's-eye-view. Designed for 
 
 :hammer: **================= UNDER DEVELOPMENT =================** :wrench:
 
+#### Foreword
+This project is inspired by the paper [Efficient L-Shape Fitting for Vehicle Detection Using Laser Scanners](https://www.ri.cmu.edu/wp-content/uploads/2017/07/Xiao-2017-Efficient-L-Shape-Fitting.pdf).
+As in the paper, a K-D tree algorithm is used for segmentation after point cloud filtering.
+This step is inspired by [Moving object classification using horizontal laser scan data](https://www.researchgate.net/profile/Huijing_Zhao/publication/224557150_Moving_object_classification_using_horizontal_laser_scan_data/links/00b7d520b05aa1a131000000/Moving-object-classification-using-horizontal-laser-scan-data.pdf).
+Within found clusters, L-shapes are detected.
+For easy prototyping and modelling, Python was used instead of a more computationally powerful language.
+The NumPy library is heavily used.
+
 #### Prepare environment
 ```bash
 conda create --name kitti -y python=3
@@ -21,6 +29,10 @@ pip install -r requirements.txt
 
 #### Run bevLshaper on KITTI dataset scenes
 ```bash
+# Display traffic scene in BEV
+python render_scene.py
+
+# Run segmentation and detection algorithm
 # See main.py for execution config
 python main.py
 ```
