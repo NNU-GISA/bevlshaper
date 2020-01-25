@@ -2,6 +2,16 @@
 from exploreKITTI.explore_kitti_lib import *
 from adaptive_segmentation import *
 import numpy.matlib
+from pcl_filter import *
+
+# Constants
+ORIGIN_X = 0
+ORIGIN_Y = 0
+ORIGIN_CIRCLE_RADIUS = 6.1
+PATCH_X = -18
+PATCH_Y = -10.5
+PATCH_WIDTH = 80
+PATCH_HEIGHT = 21
 
 # Choose input data
 date = '2011_09_26'
@@ -22,8 +32,15 @@ def get_pcl_from_frame(dataset, frame, points = 0.1):
 
 # Get PCL data
 for frame in range(len(dataset)):
-    # Extract PCL data from frame, use X-Y coordinates (BEV)
-    pcl = list(np.asarray(get_pcl_from_frame(dataset, frame)[:, [0, 1]]))
+    # Filter point cloud
+    velo_frame = get_pcl_from_frame(dataset, frame)
+    velo_frame = filter_ground_plane(velo_frame)
+    velo_frame = apply_circular_mask(velo_frame, [ORIGIN_X, ORIGIN_Y], ORIGIN_CIRCLE_RADIUS)
+    velo_frame = apply_rectangular_mask(velo_frame, [PATCH_X, PATCH_Y], PATCH_WIDTH, PATCH_HEIGHT)
+
+    # Get data
+    pcl = list(np.asarray(velo_frame[:, [0, 1]]))
+
     # Adaptively segment PCL data
-    c = cluster_kdtree(pcl, np.matlib.repmat(1, 1, len(pcl))[0])
+    c = cluster_kdtree(pcl, np.matlib.repmat(0.2, 1, len(pcl))[0])
     print(c)

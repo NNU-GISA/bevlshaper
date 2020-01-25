@@ -1,7 +1,9 @@
 # Dev files
 *.zip
+.idea/
+*.gif
 
-# Runtime files
+# Execution files
 data/
 exploreKITTI/
 video/

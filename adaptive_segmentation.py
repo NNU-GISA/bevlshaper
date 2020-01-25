@@ -1,6 +1,6 @@
 # Load dependencies
+from exploreKITTI.utilities import *
 import numpy as np
-import sys
 
 # Find all points in range function
 def find_all_points_in_range(p, r, pcl):
@@ -44,6 +44,8 @@ def cluster_kdtree(pcl, a):
     checked_p = []
     # Iterate over all points p
     for n in range(len(pcl)):
+        # Print progress
+        print("Iteration", n, "out of", len(pcl))
         # Select point p
         p = pcl[n]
         # If point p was not considered yet, continue
@@ -53,6 +55,8 @@ def cluster_kdtree(pcl, a):
             k = 0
             # Iterate over cluster while it is created to extend it
             while k < len(cluster):
+                # Print progress
+                print_progress(k + 1, len(cluster))
                 # Attach iterate over cluster, select last added point
                 p_tmp = cluster[k]
                 # Set constant radius
