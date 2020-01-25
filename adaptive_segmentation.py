@@ -37,7 +37,7 @@ def better_isin(points, point):
                 return True
 
 # Cluster K-D tree function
-def cluster_kdtree(pcl, a):
+def cluster_kdtree(pcl, a, min_cluster_len=5):
     # Init empty set of clusters
     clusters = []
     # Init empty list of checked points
@@ -72,6 +72,7 @@ def cluster_kdtree(pcl, a):
                 checked_p.append(p_tmp)
                 k += 1
             # Append complete cluster to set of clusters
-            clusters.append(cluster)
+            if len(cluster) >= min_cluster_len:
+                clusters.append(cluster)
     # Return set of clusters
-    return clusters
+    return np.asarray(clusters)
