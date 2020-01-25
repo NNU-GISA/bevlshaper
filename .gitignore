@@ -1,0 +1,10 @@
+# Dev files
+*.zip
+
+# Runtime files
+data/
+exploreKITTI/
+video/
+
+# Python cache
+__pycache__
